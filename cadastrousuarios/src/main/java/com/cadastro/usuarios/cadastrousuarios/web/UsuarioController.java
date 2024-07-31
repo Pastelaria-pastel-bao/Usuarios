@@ -1,5 +1,6 @@
 package com.cadastro.usuarios.cadastrousuarios.web;
 
+import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -45,7 +46,7 @@ public class UsuarioController {
 
 
     public ResponseEntity<Usuarios> updateUsuarios(@PathVariable Long id, @RequestBody Usuarios updatedPasteis) {
-        Optional<Usuarios> usuario = usuarioService.updatePasteisPartial(id, updatedPasteis);
+        Optional<Usuarios> usuario = usuarioService.updateUsuario(id, updatedPasteis);
         return usuario.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
