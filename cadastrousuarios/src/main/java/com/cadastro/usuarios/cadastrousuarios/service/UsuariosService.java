@@ -10,7 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import com.cadastro.usuarios.cadastrousuarios.exeptions.DatabaseException;
+import com.cadastro.usuarios.cadastrousuarios.exeptions.InvalidInputException;
+import com.cadastro.usuarios.cadastrousuarios.exeptions.UsuarioNaoEncontradoException;
+
 
 import java.util.Optional;
 
@@ -40,7 +44,7 @@ public class UsuariosService {
                 throw new InvalidInputException("ID inválido");
             }
             if (!repository.existsById(id)) {
-                throw new PastelNaoEncontradoException("Usuario não encontrado");
+                throw new UsuarioNaoEncontradoException("Usuario não encontrado");
             }
             ModelMapper mapper = new ModelMapper();
 
@@ -74,7 +78,7 @@ public class UsuariosService {
 
             return Optional.of(dto);
 
-        } catch (UsuariolNaoEncontradoException | InvalidInputException ex) {
+        } catch (UsuarioNaoEncontradoException | InvalidInputException ex) {
             log.error("Erro ao buscar usuario pelo CPF: {}", cpf, ex);
             throw ex;
         } catch (Exception ex) {
@@ -90,7 +94,7 @@ public class UsuariosService {
                 throw new InvalidInputException("ID inválido");
             }
             if (!repository.existsById(id)) {
-                throw new PastelNaoEncontradoException("Usuario não encontrado");
+                throw new UsuarioNaoEncontradoException("Usuario não encontrado");
             }
             repository.deleteById(id);
         } catch (UsuarioNaoEncontradoException | InvalidInputException ex) {
@@ -103,17 +107,17 @@ public class UsuariosService {
     }
 
     @Transactional
-    public Usuarios updateUsuarios(Long id, Usuarios updatedPasteis){
+    public Optional<Usuarios> updateUsuarios(Long id, Usuarios updatedPasteis){
         try {
             if (id <= 0) {
                 throw new InvalidInputException("ID inválido");
             }
             if (!repository.existsById(id)) {
-                throw new PastelNaoEncontradoException("Usuario não encontrado");
+                throw new UsuarioNaoEncontradoException("Usuario não enAcontrado");
             }
             updatedPasteis.setId(id);
 
-            return repository.save(updatedPasteis);
+            return Optional.of(repository.save(updatedPasteis));
 
         } catch (UsuarioNaoEncontradoException | InvalidInputException ex) {
             log.error("Erro ao buscar usuario por ID: {}", id, ex);
