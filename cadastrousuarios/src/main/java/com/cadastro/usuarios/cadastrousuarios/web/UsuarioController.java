@@ -1,5 +1,8 @@
 package com.cadastro.usuarios.cadastrousuarios.web;
 
+import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
+import com.cadastro.usuarios.cadastrousuarios.service.UsuariosService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,9 +27,13 @@ import java.util.Optional;
 @Validated
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
+    private final UsuariosService usuarioService;
 
-    public ResponseEntity<Usuarios> criar(@Valid  @RequestBody Usuarios u) {
+    public UsuarioController(UsuariosService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
+
+    public ResponseEntity<Usuarios> criar(@Valid @RequestBody Usuarios u) {
         Usuarios usuario = usuarioService.criar(u);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
@@ -37,8 +44,8 @@ public class UsuarioController {
     }
 
 
-    public ResponseEntity<Optional<Usuarios>> getByNome(@PathVariable String nome) {
-        return ResponseEntity.ok(usuarioService.getByNome(nome));
+    public ResponseEntity<Optional<Usuarios>> getByCpf(@PathVariable String cpf) {
+        return ResponseEntity.ok(usuarioService.getByCPF(cpf));
     }
 
 
@@ -49,7 +56,7 @@ public class UsuarioController {
 
 
     public ResponseEntity<Usuarios> updateUsuarios(@PathVariable Long id, @RequestBody Usuarios updatedPasteis) {
-        Optional<Usuarios> usuario = usuarioService.updatePasteisPartial(id, updatedPasteis);
+        Optional<Usuarios> usuario = usuarioService.updateUsuario(id, updatedPasteis);
         return usuario.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
