@@ -45,7 +45,6 @@ public class UsuariosService {
             ModelMapper mapper = new ModelMapper();
 
             Usuarios usuario = repository.findById(id).get();
-            
 
             UsuariosFindDto dto = mapper.map(usuario, UsuariosFindDto.class);
 
@@ -62,16 +61,18 @@ public class UsuariosService {
 
 
     @Transactional
-    public Optional<UsuarioFindDto> getByCPF(String cpf) {
+    public Optional<UsuariosFindDto> getByCPF(String cpf) {
         try {
             if (cpf == null || cpf.isEmpty()) {
                 throw new InvalidInputException("Usuario inválido");
             }
             ModelMapper mapper = new ModelMapper();
 
+            Usuarios usuario = repository.findByCpf(cpf).get();
 
-            return mapper.map(Optional.of(UsuarioFindDto), Optional.ofNullable(UsuarioRepository.findByCpf(cpf)
-            .orElseThrow(() -> new UsuariolNaoEncontradoException("Usuario não encontrado"))));
+            UsuariosFindDto dto = mapper.map(usuario, UsuariosFindDto.class);
+
+            return Optional.of(dto);
 
         } catch (UsuariolNaoEncontradoException | InvalidInputException ex) {
             log.error("Erro ao buscar usuario pelo CPF: {}", cpf, ex);
@@ -88,10 +89,10 @@ public class UsuariosService {
             if (id <= 0) {
                 throw new InvalidInputException("ID inválido");
             }
-            if (!UsuarioRepository.existsById(id)) {
+            if (!repository.existsById(id)) {
                 throw new PastelNaoEncontradoException("Usuario não encontrado");
             }
-            UsuarioRepository.deleteById(id);
+            repository.deleteById(id);
         } catch (UsuarioNaoEncontradoException | InvalidInputException ex) {
             log.error("Erro ao deletar usuario por ID: {}", id, ex);
             throw ex;
@@ -107,9 +108,10 @@ public class UsuariosService {
             if (id <= 0) {
                 throw new InvalidInputException("ID inválido");
             }
-            if (!UsuarioRepository.existsById(id)) {
+            if (!repository.existsById(id)) {
                 throw new PastelNaoEncontradoException("Usuario não encontrado");
             }
+            updatedPasteis.setId(id);
 
             return repository.save(updatedPasteis);
 
