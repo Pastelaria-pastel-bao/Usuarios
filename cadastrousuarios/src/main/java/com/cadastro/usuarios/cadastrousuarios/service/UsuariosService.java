@@ -24,6 +24,7 @@ public class UsuariosService {
         } catch (UsuarioDuplicadoException | InvalidInputException ex) {
             log.error("Erro ao criar Usuario: {}", usuario, ex);
             throw ex;
+            
         } catch (Exception ex) {
             log.error("Erro inesperado ao criar usuario: {}", usuario, ex);
             throw new DatabaseException("Erro no banco de dados");
