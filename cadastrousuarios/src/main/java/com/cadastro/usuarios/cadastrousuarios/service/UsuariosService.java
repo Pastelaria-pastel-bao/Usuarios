@@ -3,6 +3,8 @@ package com.cadastro.usuarios.cadastrousuarios.service;
 import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UsuariosService {
 
+    private UsuarioRepository repository;
 
     @Transactional
     public Usuarios criar(Usuarios usuario) {
@@ -33,13 +36,17 @@ public class UsuariosService {
 
 
     @Transactional
-    public Optional<Usuarios> getByCPF(String cpf) {
+    public Optional<UsuarioFindDto> getByCPF(String cpf) {
         try {
             if (cpf == null || cpf.isEmpty()) {
                 throw new InvalidInputException("Usuario inválido");
             }
-            return Optional.ofNullable(UsuarioRepository.findByCpf(cpf)
-                    .orElseThrow(() -> new UsuariolNaoEncontradoException("Usuario não encontrado")));
+            ModelMapper mapper = new ModelMapper();
+
+
+            return mapper.map(Optional.of(UsuarioFindDto), Optional.ofNullable(UsuarioRepository.findByCpf(cpf)
+            .orElseThrow(() -> new UsuariolNaoEncontradoException("Usuario não encontrado"))));
+            
         } catch (UsuariolNaoEncontradoException | InvalidInputException ex) {
             log.error("Erro ao buscar usuario pelo CPF: {}", cpf, ex);
             throw ex;
