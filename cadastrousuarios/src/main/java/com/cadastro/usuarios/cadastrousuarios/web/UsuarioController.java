@@ -2,6 +2,8 @@ package com.cadastro.usuarios.cadastrousuarios.web;
 
 import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
 import com.cadastro.usuarios.cadastrousuarios.service.UsuariosService;
+import com.cadastro.usuarios.dtos.UsuariosFindDto;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +23,6 @@ import java.util.Optional;
 
 
 @Slf4j
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/usuarios")
 @Validated
@@ -39,12 +40,12 @@ public class UsuarioController {
     }
 
 
-    public ResponseEntity<Optional<Usuarios>> getById(@PathVariable Long id) {
+    public ResponseEntity<Optional<UsuariosFindDto>> getById(@PathVariable Long id) {
         return ResponseEntity.ok(usuarioService.getById(id));
     }
 
 
-    public ResponseEntity<Optional<Usuarios>> getByCpf(@PathVariable String cpf) {
+    public ResponseEntity<Optional<UsuariosFindDto>> getByCpf(@PathVariable String cpf) {
         return ResponseEntity.ok(usuarioService.getByCPF(cpf));
     }
 
@@ -56,7 +57,7 @@ public class UsuarioController {
 
 
     public ResponseEntity<Usuarios> updateUsuarios(@PathVariable Long id, @RequestBody Usuarios updatedPasteis) {
-        Optional<Usuarios> usuario = usuarioService.updateUsuario(id, updatedPasteis);
+        Optional<Usuarios> usuario = usuarioService.updateUsuarios(id, updatedPasteis);
         return usuario.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

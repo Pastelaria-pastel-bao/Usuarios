@@ -1,4 +1,4 @@
-package com.cadastro.usuarios.cadastrousuarios.web.exeptions;
+/*package com.cadastro.usuarios.cadastrousuarios.web.exeptions;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -63,3 +63,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+*/
