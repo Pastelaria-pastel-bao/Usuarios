@@ -21,7 +21,7 @@ public class UsuariosService {
     @Transactional
     public Usuarios criar(Usuarios usuario) {
         try {
-            if (UsuarioRepository.findByNome(usuario.getNome()).isPresent()) {
+            if (repository.findByNome(usuario.getNome()).isPresent()) {
                 throw new UsuarioDuplicadoException("Usuario com este nome já existe");
             }
             return UsuarioRepository.save(usuario);
