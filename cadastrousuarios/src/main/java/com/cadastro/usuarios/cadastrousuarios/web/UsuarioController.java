@@ -1,12 +1,7 @@
 package com.cadastro.usuarios.cadastrousuarios.web;
 
-import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
-import com.cadastro.usuarios.cadastrousuarios.service.UsuariosService;
-import com.cadastro.usuarios.dtos.UsuariosFindDto;
+import java.util.Optional;
 
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,17 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
+import com.cadastro.usuarios.cadastrousuarios.service.UsuariosService;
+import com.cadastro.usuarios.cadastrousuarios.swagger.SpringDoc;
+import com.cadastro.usuarios.dtos.UsuariosFindDto;
 
 import jakarta.validation.Valid;
-
-import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/usuarios")
 @Validated
-public class UsuarioController {
+public class UsuarioController implements SpringDoc{
 
     private final UsuariosService usuarioService;
 
@@ -56,7 +53,7 @@ public class UsuarioController {
     }
 
 
-    public ResponseEntity<Usuarios> updateUsuarios(@PathVariable Long id, @RequestBody Usuarios updatedPasteis) {
+    public ResponseEntity<Usuarios> updateUsuarios(@PathVariable Long id, @RequestBody @Valid Usuarios updatedPasteis) {
         Optional<Usuarios> usuario = usuarioService.updateUsuarios(id, updatedPasteis);
         return usuario.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
