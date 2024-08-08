@@ -31,28 +31,33 @@ public class UsuarioController implements SpringDoc{
         this.usuarioService = usuarioService;
     }
 
+    @Override
     public ResponseEntity<Usuarios> criar(@Valid @RequestBody Usuarios u) {
         Usuarios usuario = usuarioService.criar(u);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
 
+    @Override
     public ResponseEntity<Optional<UsuariosFindDto>> getById(@PathVariable Long id) {
         return ResponseEntity.ok(usuarioService.getById(id));
     }
 
 
+    @Override
     public ResponseEntity<Optional<UsuariosFindDto>> getByCpf(@PathVariable String cpf) {
         return ResponseEntity.ok(usuarioService.getByCPF(cpf));
     }
 
 
+    @Override
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         usuarioService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
 
+    @Override
     public ResponseEntity<Usuarios> updateUsuarios(@PathVariable Long id, @RequestBody @Valid Usuarios updatedPasteis) {
         Optional<Usuarios> usuario = usuarioService.updateUsuarios(id, updatedPasteis);
         return usuario.map(ResponseEntity::ok)

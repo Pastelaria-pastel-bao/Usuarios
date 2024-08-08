@@ -33,7 +33,7 @@ public interface SpringDoc {
         @ApiResponse(description = "Unprocessable Entity", responseCode = "422", content = @Content),
         @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
     })
-    public ResponseEntity<Usuarios> criar(@Valid @RequestBody Usuarios u);
+    ResponseEntity<Usuarios> criar(@Valid @RequestBody Usuarios u);
 
     @Operation(summary = "Busca pelo Id", description = "Busca um usuario pelo Id",
     tags = {"Usuarios"},
@@ -48,7 +48,7 @@ public interface SpringDoc {
         @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
         @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
     })
-    public ResponseEntity<Optional<UsuariosFindDto>> getById(@PathVariable Long id);
+    ResponseEntity<Optional<UsuariosFindDto>> getById(@PathVariable Long id);
 
     @Operation(summary = "Busca pelo Cpf", description = "Busca um usuario pelo Cpf",
     tags = {"Usuarios"},
@@ -63,7 +63,7 @@ public interface SpringDoc {
         @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
         @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
     })
-    public ResponseEntity<Optional<UsuariosFindDto>> getByCpf(@PathVariable String cpf);
+    ResponseEntity<Optional<UsuariosFindDto>> getByCpf(@PathVariable String cpf);
 
     @Operation(summary = "Deleta pelo Id", description = "Deleta um usuario pelo Id",
     tags = {"Usuarios"},
@@ -78,7 +78,7 @@ public interface SpringDoc {
         @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
         @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
     })
-    public ResponseEntity<Void> deleteById(@PathVariable Long id);
+    ResponseEntity<Void> deleteById(@PathVariable Long id);
 
     @Operation(summary = "Atualiza pelo Id", description = "Atualiza um usuario pelo Id",
     tags = {"Usuarios"},
@@ -93,5 +93,5 @@ public interface SpringDoc {
         @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
         @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
     })
-    public ResponseEntity<Usuarios> updateUsuarios(@PathVariable Long id, @RequestBody @Valid Usuarios updatedPasteis);
+    ResponseEntity<Usuarios> updateUsuarios(@PathVariable Long id, @RequestBody @Valid Usuarios updatedPasteis);
 }
