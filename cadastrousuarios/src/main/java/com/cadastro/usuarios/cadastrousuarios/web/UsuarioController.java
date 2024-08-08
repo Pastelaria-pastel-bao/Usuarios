@@ -1,12 +1,7 @@
 package com.cadastro.usuarios.cadastrousuarios.web;
 
-import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
-import com.cadastro.usuarios.cadastrousuarios.service.UsuariosService;
-import com.cadastro.usuarios.dtos.UsuariosFindDto;
+import java.util.Optional;
 
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
+import com.cadastro.usuarios.cadastrousuarios.service.UsuariosService;
+import com.cadastro.usuarios.dtos.UsuariosFindDto;
 
 import jakarta.validation.Valid;
-
-import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
