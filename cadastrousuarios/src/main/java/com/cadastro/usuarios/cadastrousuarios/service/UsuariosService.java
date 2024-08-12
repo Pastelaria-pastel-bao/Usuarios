@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UsuariosService {
 
+    @Autowired
     private UsuarioRepository repository;
 
     @Transactional
@@ -48,16 +50,14 @@ public class UsuariosService {
             }
             ModelMapper mapper = new ModelMapper();
 
-            Usuarios usuario = repository.findById(id).get();
-
-            UsuariosFindDto dto = mapper.map(usuario, UsuariosFindDto.class);
-
-            return Optional.of(dto);
+            return repository.findById(id).map(usuario -> mapper.map(usuario, UsuariosFindDto.class));
+            
 
         } catch (UsuarioNaoEncontradoException | InvalidInputException ex) {
             log.error("Erro ao buscar usuario por ID: {}", id, ex);
             throw ex;
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) {
             log.error("Erro inesperado ao buscar usuario por ID: {}", id, ex);
             throw new DatabaseException("Erro no banco de dados");
         }
@@ -72,11 +72,7 @@ public class UsuariosService {
             }
             ModelMapper mapper = new ModelMapper();
 
-            Usuarios usuario = repository.findByCpf(cpf).get();
-
-            UsuariosFindDto dto = mapper.map(usuario, UsuariosFindDto.class);
-
-            return Optional.of(dto);
+            return repository.findByCpf(cpf).map(usuario -> mapper.map(usuario, UsuariosFindDto.class));
 
         } catch (UsuarioNaoEncontradoException | InvalidInputException ex) {
             log.error("Erro ao buscar usuario pelo CPF: {}", cpf, ex);
@@ -113,7 +109,7 @@ public class UsuariosService {
                 throw new InvalidInputException("ID inválido");
             }
             if (!repository.existsById(id)) {
-                throw new UsuarioNaoEncontradoException("Usuario não enAcontrado");
+                throw new UsuarioNaoEncontradoException("Usuario não Encontrado");
             }
             updatedPasteis.setId(id);
 
