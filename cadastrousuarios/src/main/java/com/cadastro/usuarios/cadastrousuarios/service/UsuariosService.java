@@ -1,6 +1,9 @@
 package com.cadastro.usuarios.cadastrousuarios.service;
 
+import com.cadastro.usuarios.cadastrousuarios.entities.Endereco;
+import com.cadastro.usuarios.cadastrousuarios.entities.EnderecoResponse;
 import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
+import com.cadastro.usuarios.cadastrousuarios.repositories.EnderecoRepository;
 import com.cadastro.usuarios.cadastrousuarios.repositories.UsuarioRepository;
 import com.cadastro.usuarios.dtos.UsuariosFindDto;
 
@@ -15,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.DatabaseException;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.InvalidInputException;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.UsuarioNaoEncontradoException;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 
 import java.util.Optional;
@@ -24,20 +29,26 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UsuariosService {
 
+
     @Autowired
-    private UsuarioRepository repository;
+    private EnderecoRepository enderecoRepository;
 
-    @Transactional
-    public Usuarios criar(Usuarios usuario) {
-        try {
+    @Autowired
+    UsuarioRepository repository;
 
-            return repository.save(usuario);
-        
-        } catch (Exception ex) {
-            log.error("Erro inesperado ao criar usuario: {}", usuario, ex);
-            throw new DatabaseException("Erro no banco de dados");
+    public Usuarios criarUsuario(Usuarios usuario, Long enderecoId) {
+        Optional<Endereco> enderecoOptional = enderecoRepository.findById(enderecoId);
+
+        if (enderecoOptional.isPresent()) {
+            Endereco endereco = enderecoOptional.get();
+            usuario.setEndereco(endereco);
+        } else {
+            throw new RuntimeException("Endereço com ID " + enderecoId + " não encontrado");
         }
+
+        return repository.save(usuario);
     }
+
 
     @Transactional
     public Optional<UsuariosFindDto> getById(Long id){
@@ -122,6 +133,21 @@ public class UsuariosService {
             log.error("Erro inesperado ao buscar usuario por ID: {}", id, ex);
             throw new DatabaseException("Erro no banco de dados");
         }
+    }
+
+
+
+    @Autowired
+    private WebClient.Builder webClientBuilder;
+    private static final String BRASILAPI_URL = "https://brasilapi.com.br/api/cep/v2/";
+
+    public Mono<EnderecoResponse> buscarEnderecoPorCep(String cep) {
+        WebClient webClient = webClientBuilder.build();
+        return webClient.get()
+                .uri(BRASILAPI_URL + cep)
+                .retrieve()
+                .bodyToMono(EnderecoResponse.class)
+                .onErrorResume(e -> Mono.empty()); // Caso o CEP não seja encontrado
     }
 
 }

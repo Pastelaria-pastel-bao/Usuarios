@@ -15,6 +15,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.*;
+
+
 
 @Entity
 @Table(name = "Tb_Usuarios")
@@ -40,9 +43,9 @@ public class Usuarios {
     @Column(length = 11)
     private String telefone;
 
-    @NotNull
-    @NotEmpty
-    private String endereco;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
 
     @NotNull
     @NotEmpty
