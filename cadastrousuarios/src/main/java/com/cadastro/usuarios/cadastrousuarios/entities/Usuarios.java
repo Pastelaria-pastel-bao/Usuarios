@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,22 +24,24 @@ public class Usuarios {
     private Long id;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Nome não pode estar vazio")
     private String nome;
 
-    @Email
+    @Email(message = "Email deve ser válido")
     private String email;
 
-    @CPF
+    @Column(name = "cpf", unique = true)
+    @CPF(message = "CPF deve ser válido")
     private String cpf;
 
     @NotNull
-    @NotEmpty
-    @Column(length = 11)
+    @NotEmpty(message = "Telefone não pode estar vazio")
+    @Size(min = 11, max = 11, message = "Telefone deve ter 11 dígitos")
     private String telefone;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Senha não pode estar vazia")
+    @Size(min = 6, message = "Senha deve ter pelo menos 6 caracteres")
     private String senha;
 
     @OneToOne(cascade = CascadeType.ALL)

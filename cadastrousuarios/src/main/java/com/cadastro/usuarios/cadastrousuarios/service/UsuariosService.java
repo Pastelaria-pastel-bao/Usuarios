@@ -3,6 +3,7 @@ package com.cadastro.usuarios.cadastrousuarios.service;
 import com.cadastro.usuarios.cadastrousuarios.entities.Endereco;
 import com.cadastro.usuarios.cadastrousuarios.entities.EnderecoResponse;
 import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
+import com.cadastro.usuarios.cadastrousuarios.exeptions.UsuarioJaCadastradoException;
 import com.cadastro.usuarios.cadastrousuarios.repositories.EnderecoRepository;
 import com.cadastro.usuarios.cadastrousuarios.repositories.UsuarioRepository;
 import com.cadastro.usuarios.dtos.UsuariosFindDto;
@@ -37,7 +38,9 @@ public class UsuariosService {
     UsuarioRepository repository;
 
     public Usuarios criarUsuario(Usuarios usuario) {
-
+        if (repository.findByCpf(usuario.getCpf()).isPresent()) {
+            throw new UsuarioJaCadastradoException("CPF já está em uso");
+        }
         return repository.save(usuario);
     }
 

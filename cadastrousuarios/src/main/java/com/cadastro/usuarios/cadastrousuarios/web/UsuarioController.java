@@ -39,7 +39,7 @@ public class UsuarioController implements SpringDoc{
 
 
     @PostMapping
-    public ResponseEntity<Usuarios> criarUsuario(@RequestBody Usuarios usuario) {
+    public ResponseEntity<Usuarios> criarUsuario(@Valid @RequestBody Usuarios usuario) {
         try {
             Usuarios novoUsuario = usuarioService.criarUsuario(usuario);
             return new ResponseEntity<>(novoUsuario, HttpStatus.CREATED);
