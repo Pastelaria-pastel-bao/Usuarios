@@ -1,6 +1,6 @@
 package com.cadastro.usuarios.cadastrousuarios.entities;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -8,11 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
+@Table(name = "Tb_Endereco")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 public class Endereco {
 
     @Id
@@ -35,10 +36,10 @@ public class Endereco {
     private String logradouro;
 
     private String numero;
+
     private String complemento;
 
-    @OneToOne(mappedBy = "endereco")
-    private Usuarios usuario;
-
-
+    @JsonIgnore
+    @Column(name = "usuario_id")
+    private Long usuarioId;
 }

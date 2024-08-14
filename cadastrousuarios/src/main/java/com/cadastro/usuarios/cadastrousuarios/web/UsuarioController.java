@@ -38,9 +38,14 @@ public class UsuarioController implements SpringDoc{
     }
 
 
-    @PostMapping("/id/{iud}")
-    public Usuarios criarUsuario(@RequestBody Usuarios usuario, @PathVariable Long id) {
-        return usuarioService.criarUsuario(usuario,id);
+    @PostMapping
+    public ResponseEntity<Usuarios> criarUsuario(@RequestBody Usuarios usuario) {
+        try {
+            Usuarios novoUsuario = usuarioService.criarUsuario(usuario);
+            return new ResponseEntity<>(novoUsuario, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{cep}")

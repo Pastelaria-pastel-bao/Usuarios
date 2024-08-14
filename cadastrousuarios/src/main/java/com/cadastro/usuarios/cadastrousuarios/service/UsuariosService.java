@@ -36,15 +36,7 @@ public class UsuariosService {
     @Autowired
     UsuarioRepository repository;
 
-    public Usuarios criarUsuario(Usuarios usuario, Long enderecoId) {
-        Optional<Endereco> enderecoOptional = enderecoRepository.findById(enderecoId);
-
-        if (enderecoOptional.isPresent()) {
-            Endereco endereco = enderecoOptional.get();
-            usuario.setEndereco(endereco);
-        } else {
-            throw new RuntimeException("Endereço com ID " + enderecoId + " não encontrado");
-        }
+    public Usuarios criarUsuario(Usuarios usuario) {
 
         return repository.save(usuario);
     }
