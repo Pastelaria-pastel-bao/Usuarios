@@ -106,7 +106,7 @@ public class UsuariosService {
     }
 
     @Transactional
-    public Optional<Usuarios> updateUsuarios(Long id, Usuarios updatedPasteis){
+    public Optional<Usuarios> updateUsuarios(Long id, Usuarios updatedUsuarios){
         try {
             if (id <= 0) {
                 throw new InvalidInputException("ID inválido");
@@ -114,9 +114,9 @@ public class UsuariosService {
             if (!repository.existsById(id)) {
                 throw new UsuarioNaoEncontradoException("Usuario não Encontrado");
             }
-            updatedPasteis.setId(id);
+            updatedUsuarios.setId(id);
 
-            return Optional.of(repository.save(updatedPasteis));
+            return Optional.of(repository.save(updatedUsuarios));
 
         } catch (UsuarioNaoEncontradoException | InvalidInputException ex) {
             log.error("Erro ao buscar usuario por ID: {}", id, ex);

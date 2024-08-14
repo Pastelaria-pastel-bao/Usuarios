@@ -1,6 +1,7 @@
 package com.cadastro.usuarios.cadastrousuarios.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -39,7 +40,7 @@ public class Endereco {
 
     private String complemento;
 
-    @JsonIgnore
+
     @Column(name = "usuario_id")
     private Long usuarioId;
 }
