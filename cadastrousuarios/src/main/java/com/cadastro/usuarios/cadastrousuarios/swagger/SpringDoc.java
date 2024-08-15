@@ -20,20 +20,20 @@ import jakarta.validation.Valid;
 @Tag(name = "Usuarios", description = "Endpoints para gerenciamento de usuario")
 public interface SpringDoc {
 
-    @Operation(summary = "Cria Usuario", description = "Cria um Usuario",
-    tags = {"Usuarios"},
-    responses = {
-        @ApiResponse(description = "Criado", responseCode = "201",
-        content = {
-            @Content(
-                mediaType = "application/json",
-                array = @ArraySchema(schema = @Schema(implementation = Usuarios.class)) 
-            )
-        }),
-        @ApiResponse(description = "Unprocessable Entity", responseCode = "422", content = @Content),
-        @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
-    })
-    ResponseEntity<Usuarios> criar(@Valid @RequestBody Usuarios u);
+//    @Operation(summary = "Cria Usuario", description = "Cria um Usuario",
+//    tags = {"Usuarios"},
+//    responses = {
+//        @ApiResponse(description = "Criado", responseCode = "201",
+//        content = {
+//            @Content(
+//                mediaType = "application/json",
+//                array = @ArraySchema(schema = @Schema(implementation = Usuarios.class))
+//            )
+//        }),
+//        @ApiResponse(description = "Unprocessable Entity", responseCode = "422", content = @Content),
+//        @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+//    })
+//    ResponseEntity<Usuarios> criar(@Valid @RequestBody Usuarios u);
 
     @Operation(summary = "Busca pelo Id", description = "Busca um usuario pelo Id",
     tags = {"Usuarios"},

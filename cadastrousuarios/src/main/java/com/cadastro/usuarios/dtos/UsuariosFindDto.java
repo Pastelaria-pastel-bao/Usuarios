@@ -1,5 +1,6 @@
 package com.cadastro.usuarios.dtos;
 
+import com.cadastro.usuarios.cadastrousuarios.entities.endereco.Endereco;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,5 +12,6 @@ public class UsuariosFindDto {
     private String nome;
     private String email;
     private String telefone;
+    private Endereco endereco;
 
 }

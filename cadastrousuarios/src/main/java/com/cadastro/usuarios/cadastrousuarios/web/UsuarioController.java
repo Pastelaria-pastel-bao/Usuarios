@@ -2,6 +2,7 @@ package com.cadastro.usuarios.cadastrousuarios.web;
 
 import java.util.Optional;
 
+import com.cadastro.usuarios.cadastrousuarios.entities.endereco.EnderecoResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +22,7 @@ import com.cadastro.usuarios.dtos.UsuariosFindDto;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 
 @Slf4j
@@ -35,11 +37,20 @@ public class UsuarioController implements SpringDoc{
         this.usuarioService = usuarioService;
     }
 
-    @Override
+
     @PostMapping
-    public ResponseEntity<Usuarios> criar(@Valid @RequestBody Usuarios u) {
-        Usuarios usuario = usuarioService.criar(u);
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
+    public ResponseEntity<Usuarios> criarUsuario(@Valid @RequestBody Usuarios usuario) {
+        try {
+            Usuarios novoUsuario = usuarioService.criarUsuario(usuario);
+            return new ResponseEntity<>(novoUsuario, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/{cep}")
+    public Mono<EnderecoResponse> getEnderecoPorCep(@PathVariable String cep) {
+        return usuarioService.buscarEnderecoPorCep(cep);
     }
 
 

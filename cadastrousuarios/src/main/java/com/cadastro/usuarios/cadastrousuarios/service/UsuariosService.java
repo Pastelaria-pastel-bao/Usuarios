@@ -1,6 +1,9 @@
 package com.cadastro.usuarios.cadastrousuarios.service;
 
+import com.cadastro.usuarios.cadastrousuarios.entities.endereco.EnderecoResponse;
 import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
+import com.cadastro.usuarios.cadastrousuarios.exeptions.UsuarioJaCadastradoException;
+import com.cadastro.usuarios.cadastrousuarios.repositories.EnderecoRepository;
 import com.cadastro.usuarios.cadastrousuarios.repositories.UsuarioRepository;
 import com.cadastro.usuarios.dtos.UsuariosFindDto;
 
@@ -15,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.DatabaseException;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.InvalidInputException;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.UsuarioNaoEncontradoException;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 
 import java.util.Optional;
@@ -24,20 +29,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UsuariosService {
 
+
     @Autowired
-    private UsuarioRepository repository;
+    private EnderecoRepository enderecoRepository;
 
-    @Transactional
-    public Usuarios criar(Usuarios usuario) {
-        try {
+    @Autowired
+    UsuarioRepository repository;
 
-            return repository.save(usuario);
-        
-        } catch (Exception ex) {
-            log.error("Erro inesperado ao criar usuario: {}", usuario, ex);
-            throw new DatabaseException("Erro no banco de dados");
+    public Usuarios criarUsuario(Usuarios usuario) {
+        if (repository.findByCpf(usuario.getCpf()).isPresent()) {
+            throw new UsuarioJaCadastradoException("CPF já está em uso");
         }
+        return repository.save(usuario);
     }
+
 
     @Transactional
     public Optional<UsuariosFindDto> getById(Long id){
@@ -103,7 +108,7 @@ public class UsuariosService {
     }
 
     @Transactional
-    public Optional<Usuarios> updateUsuarios(Long id, Usuarios updatedPasteis){
+    public Optional<Usuarios> updateUsuarios(Long id, Usuarios updatedUsuarios){
         try {
             if (id <= 0) {
                 throw new InvalidInputException("ID inválido");
@@ -111,9 +116,9 @@ public class UsuariosService {
             if (!repository.existsById(id)) {
                 throw new UsuarioNaoEncontradoException("Usuario não Encontrado");
             }
-            updatedPasteis.setId(id);
+            updatedUsuarios.setId(id);
 
-            return Optional.of(repository.save(updatedPasteis));
+            return Optional.of(repository.save(updatedUsuarios));
 
         } catch (UsuarioNaoEncontradoException | InvalidInputException ex) {
             log.error("Erro ao buscar usuario por ID: {}", id, ex);
@@ -122,6 +127,21 @@ public class UsuariosService {
             log.error("Erro inesperado ao buscar usuario por ID: {}", id, ex);
             throw new DatabaseException("Erro no banco de dados");
         }
+    }
+
+
+
+    @Autowired
+    private WebClient.Builder webClientBuilder;
+    private static final String BRASILAPI_URL = "https://brasilapi.com.br/api/cep/v2/";
+
+    public Mono<EnderecoResponse> buscarEnderecoPorCep(String cep) {
+        WebClient webClient = webClientBuilder.build();
+        return webClient.get()
+                .uri(BRASILAPI_URL + cep)
+                .retrieve()
+                .bodyToMono(EnderecoResponse.class)
+                .onErrorResume(e -> Mono.empty()); // Caso o CEP não seja encontrado
     }
 
 }
