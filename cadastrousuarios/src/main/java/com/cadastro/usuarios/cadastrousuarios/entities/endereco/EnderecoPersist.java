@@ -1,4 +1,4 @@
-package com.cadastro.usuarios.cadastrousuarios.entities;
+package com.cadastro.usuarios.cadastrousuarios.entities.endereco;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -8,35 +8,27 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "terset")
+@Table(name = "Tb_Endereco")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Endereco {
+public class EnderecoPersist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    private String cep;
+    @Column(name = "usuario_id")
+    private Long usuarioId;
 
-    @NotNull
-    private String estado;
+    @ManyToOne
+    @JoinColumn(name = "bairro_id", nullable = false)
+    private Bairro bairro;
 
-    @NotNull
-    private String cidade;
-
-    @NotNull
-    private String bairro;
-
-    @NotNull
-    private String logradouro;
 
     private String numero;
 
     private String complemento;
 
-    private Long usuarioId;
 }

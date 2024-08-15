@@ -1,5 +1,6 @@
 package com.cadastro.usuarios.cadastrousuarios.entities;
 
+import com.cadastro.usuarios.cadastrousuarios.entities.endereco.EnderecoPersist;
 import org.hibernate.validator.constraints.br.CPF;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -46,5 +47,5 @@ public class Usuarios {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id", referencedColumnName = "id", nullable = true)
-    private Endereco endereco;
+    private EnderecoPersist endereco;
 }
