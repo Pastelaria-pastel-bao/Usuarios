@@ -1,6 +1,6 @@
 package com.cadastro.usuarios.dtos;
 
-import com.cadastro.usuarios.cadastrousuarios.entities.Endereco;
+import com.cadastro.usuarios.cadastrousuarios.entities.endereco.Endereco;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

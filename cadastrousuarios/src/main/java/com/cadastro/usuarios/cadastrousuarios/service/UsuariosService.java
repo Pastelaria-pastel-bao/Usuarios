@@ -1,7 +1,6 @@
 package com.cadastro.usuarios.cadastrousuarios.service;
 
-import com.cadastro.usuarios.cadastrousuarios.entities.Endereco;
-import com.cadastro.usuarios.cadastrousuarios.entities.EnderecoResponse;
+import com.cadastro.usuarios.cadastrousuarios.entities.endereco.EnderecoResponse;
 import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.UsuarioJaCadastradoException;
 import com.cadastro.usuarios.cadastrousuarios.repositories.EnderecoRepository;

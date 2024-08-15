@@ -1,10 +1,10 @@
 package com.cadastro.usuarios.cadastrousuarios.service;
 
-import com.cadastro.usuarios.cadastrousuarios.entities.Endereco;
+import com.cadastro.usuarios.cadastrousuarios.entities.endereco.Endereco;
 import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
 import com.cadastro.usuarios.cadastrousuarios.entities.endereco.Bairro;
 import com.cadastro.usuarios.cadastrousuarios.entities.endereco.Cidade;
-import com.cadastro.usuarios.cadastrousuarios.entities.endereco.EnderecoPersist;
+import com.cadastro.usuarios.cadastrousuarios.entities.EnderecoPersist;
 import com.cadastro.usuarios.cadastrousuarios.entities.endereco.Estado;
 import com.cadastro.usuarios.cadastrousuarios.entities.repository.BairroRepository;
 import com.cadastro.usuarios.cadastrousuarios.entities.repository.CidadeRepository;

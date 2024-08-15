@@ -1,4 +1,4 @@
-package com.cadastro.usuarios.cadastrousuarios.entities;
+package com.cadastro.usuarios.cadastrousuarios.entities.endereco;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

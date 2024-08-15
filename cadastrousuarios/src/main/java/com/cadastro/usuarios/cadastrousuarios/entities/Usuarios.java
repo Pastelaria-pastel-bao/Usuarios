@@ -1,6 +1,5 @@
 package com.cadastro.usuarios.cadastrousuarios.entities;
 
-import com.cadastro.usuarios.cadastrousuarios.entities.endereco.EnderecoPersist;
 import org.hibernate.validator.constraints.br.CPF;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

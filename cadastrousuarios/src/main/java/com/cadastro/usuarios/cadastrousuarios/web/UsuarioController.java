@@ -2,7 +2,7 @@ package com.cadastro.usuarios.cadastrousuarios.web;
 
 import java.util.Optional;
 
-import com.cadastro.usuarios.cadastrousuarios.entities.EnderecoResponse;
+import com.cadastro.usuarios.cadastrousuarios.entities.endereco.EnderecoResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

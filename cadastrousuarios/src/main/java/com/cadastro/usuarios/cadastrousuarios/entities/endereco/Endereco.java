@@ -8,27 +8,35 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Tb_Endereco")
+@Table(name = "terset")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EnderecoPersist {
+public class Endereco {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "usuario_id")
-    private Long usuarioId;
+    @NotNull
+    private String cep;
 
-    @ManyToOne
-    @JoinColumn(name = "bairro_id", nullable = false)
-    private Bairro bairro;
+    @NotNull
+    private String estado;
 
+    @NotNull
+    private String cidade;
+
+    @NotNull
+    private String bairro;
+
+    @NotNull
+    private String logradouro;
 
     private String numero;
 
     private String complemento;
 
+    private Long usuarioId;
 }
