@@ -1,4 +1,4 @@
-package com.cadastro.usuarios.cadastrousuarios.entities.repository;
+package com.cadastro.usuarios.cadastrousuarios.repositories;
 
 import com.cadastro.usuarios.cadastrousuarios.entities.endereco.Estado;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -3,6 +3,7 @@ package com.cadastro.usuarios.cadastrousuarios.web;
 import java.util.Optional;
 
 import com.cadastro.usuarios.cadastrousuarios.entities.endereco.EnderecoResponse;
+import com.cadastro.usuarios.cadastrousuarios.exeptions.UsuarioJaCadastradoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -39,10 +40,12 @@ public class UsuarioController implements SpringDoc{
 
 
     @PostMapping
-    public ResponseEntity<Usuarios> criarUsuario(@Valid @RequestBody Usuarios usuario) {
+    public ResponseEntity<?> criarUsuario(@Valid @RequestBody Usuarios usuario) {
         try {
             Usuarios novoUsuario = usuarioService.criarUsuario(usuario);
             return new ResponseEntity<>(novoUsuario, HttpStatus.CREATED);
+        } catch (UsuarioJaCadastradoException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
