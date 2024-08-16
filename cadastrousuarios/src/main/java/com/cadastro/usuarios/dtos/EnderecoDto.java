@@ -1,23 +1,16 @@
-package com.cadastro.usuarios.cadastrousuarios.entities.endereco;
+package com.cadastro.usuarios.dtos;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "terset")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Endereco {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class EnderecoDto {
 
     @NotNull
     private String cep;
@@ -31,8 +24,6 @@ public class Endereco {
     @NotNull
     private String bairro;
 
-    @NotNull
-    private String logradouro;
 
     private String numero;
 

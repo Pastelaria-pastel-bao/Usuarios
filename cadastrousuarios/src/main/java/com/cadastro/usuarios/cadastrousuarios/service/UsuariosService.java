@@ -3,7 +3,6 @@ package com.cadastro.usuarios.cadastrousuarios.service;
 import com.cadastro.usuarios.cadastrousuarios.entities.endereco.EnderecoResponse;
 import com.cadastro.usuarios.cadastrousuarios.entities.Usuarios;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.UsuarioJaCadastradoException;
-import com.cadastro.usuarios.cadastrousuarios.repositories.EnderecoRepository;
 import com.cadastro.usuarios.cadastrousuarios.repositories.UsuarioRepository;
 import com.cadastro.usuarios.dtos.UsuariosFindDto;
 
@@ -29,15 +28,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UsuariosService {
 
-
-    @Autowired
-    private EnderecoRepository enderecoRepository;
-
     @Autowired
     UsuarioRepository repository;
 
+    @Transactional
     public Usuarios criarUsuario(Usuarios usuario) {
-        if (repository.findByCpf(usuario.getCpf()).isPresent()) {
+        Optional<Usuarios> usuarios = repository.findByCpf(usuario.getCpf());
+        if (usuarios.isPresent()) {
             throw new UsuarioJaCadastradoException("CPF já está em uso");
         }
         return repository.save(usuario);
