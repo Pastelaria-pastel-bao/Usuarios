@@ -1,4 +1,4 @@
-package com.cadastro.usuarios.cadastrousuarios.exceptions;
+package com.cadastro.usuarios.cadastrousuarios.web.exeptions;
 
 import com.cadastro.usuarios.cadastrousuarios.exeptions.DatabaseException;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.InvalidInputException;

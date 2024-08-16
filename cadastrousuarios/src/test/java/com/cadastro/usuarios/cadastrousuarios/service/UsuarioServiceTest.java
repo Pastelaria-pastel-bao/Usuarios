@@ -35,22 +35,22 @@ public class UsuarioServiceTest {
 
     @Test
     public void criarUsuario_ComDadosValidos_retornarUsuario(){
-        when(service.criar(usuarioCriar)).thenReturn(usuarioPadrao);
+        when(service.criarUsuario(usuarioCriar)).thenReturn(usuarioPadrao);
 
-       Usuarios teste = service.criar(usuarioCriar);
+       Usuarios teste = service.criarUsuario(usuarioCriar);
 
        assertThat(teste).isEqualTo(usuarioPadrao);
     }
 
     @Test
     public void criarUsuario_ComDadosInvalidos_lancarException(){
-        when(service.criar(usuarioNulo)).thenThrow(new DatabaseException("Dados Invalidos"));
+        when(service.criarUsuario(usuarioNulo)).thenThrow(new DatabaseException("Dados Invalidos"));
 
-        assertThatThrownBy(() -> service.criar(usuarioNulo)).isInstanceOf(DatabaseException.class);
+        assertThatThrownBy(() -> service.criarUsuario(usuarioNulo)).isInstanceOf(DatabaseException.class);
 
-        when(service.criar(usuarioVazio)).thenThrow(new DatabaseException("Dados Invalidos"));
+        when(service.criarUsuario(usuarioVazio)).thenThrow(new DatabaseException("Dados Invalidos"));
 
-        assertThatThrownBy(() -> service.criar(usuarioVazio)).isInstanceOf(DatabaseException.class);
+        assertThatThrownBy(() -> service.criarUsuario(usuarioVazio)).isInstanceOf(DatabaseException.class);
     }
 
     @Test
