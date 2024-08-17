@@ -17,6 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.DatabaseException;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.InvalidInputException;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.UsuarioNaoEncontradoException;
+import com.cadastro.usuarios.cadastrousuarios.feing.Email;
+import com.cadastro.usuarios.cadastrousuarios.feing.EmailClient;
+
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -30,6 +33,8 @@ public class UsuariosService {
 
     @Autowired
     UsuarioRepository repository;
+
+    private final EmailClient emailClient;
 
     @Transactional
     public Usuarios criarUsuario(Usuarios usuario) {
@@ -139,6 +144,19 @@ public class UsuariosService {
                 .retrieve()
                 .bodyToMono(EnderecoResponse.class)
                 .onErrorResume(e -> Mono.empty()); // Caso o CEP não seja encontrado
+    }
+
+    public void recuperarSenha(String destino){
+        try {
+            if(!repository.existsByEmail(destino)){
+                throw new EmailNaoEncontradoException();
+            }
+            emailClient.enviarEmail(new Email(destino, "Recuperação de senha", "Teste"));
+            
+        } catch (EmailNaoEncontradoException e) {
+            log.error("Erro ao buscar pelo email {}", destino, e);
+            throw e;
+        }
     }
 
 }
