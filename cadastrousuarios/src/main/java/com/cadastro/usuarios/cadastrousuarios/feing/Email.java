@@ -1,5 +1,15 @@
 package com.cadastro.usuarios.cadastrousuarios.feing;
 
-public record Email(String to, String subject, String body) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@AllArgsConstructor
+@Getter
+@Setter
+public class Email {
+    private String to;
+    private String subject;
+    private String body;
 
 }

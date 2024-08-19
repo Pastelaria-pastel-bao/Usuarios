@@ -147,15 +147,18 @@ public class UsuariosService {
                 .onErrorResume(e -> Mono.empty()); // Caso o CEP não seja encontrado
     }
 
-    public void recuperarSenha(String destino){
+    @Transactional
+    public void recuperarSenha(){
         try {
-            if(!repository.existsByEmail(destino)){
+
+            if(false){
                 throw new EmailNaoEncontradoException("Email não encontrado");
             }
-            emailClient.enviarEmail(new Email(destino, "Recuperação de senha", "Teste"));
+
+            emailClient.enviarEmail(new Email("murilomazur@hotmail.com", "Recuperação de senha", "Teste"));
             
         } catch (EmailNaoEncontradoException e) {
-            log.error("Erro ao buscar pelo email {}", destino, e);
+            log.error("Erro ao buscar pelo email {}", "murilomazur@hotmail.com", e);
             throw e;
         }
     }
