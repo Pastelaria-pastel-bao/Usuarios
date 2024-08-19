@@ -1,6 +1,7 @@
 package com.cadastro.usuarios.cadastrousuarios.web.exeptions;
 
 import com.cadastro.usuarios.cadastrousuarios.exeptions.DatabaseException;
+import com.cadastro.usuarios.cadastrousuarios.exeptions.EmailNaoEncontradoException;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.InvalidInputException;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.UsuarioJaCadastradoException;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.UsuarioNaoEncontradoException;
@@ -72,4 +73,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
+    @ExceptionHandler(EmailNaoEncontradoException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleUEmailNaoEncontradoException(EmailNaoEncontradoException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+    
 }

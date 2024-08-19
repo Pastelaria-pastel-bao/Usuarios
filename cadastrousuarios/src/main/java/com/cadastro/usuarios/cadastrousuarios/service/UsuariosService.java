@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cadastro.usuarios.cadastrousuarios.exeptions.DatabaseException;
+import com.cadastro.usuarios.cadastrousuarios.exeptions.EmailNaoEncontradoException;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.InvalidInputException;
 import com.cadastro.usuarios.cadastrousuarios.exeptions.UsuarioNaoEncontradoException;
 import com.cadastro.usuarios.cadastrousuarios.feing.Email;
@@ -149,7 +150,7 @@ public class UsuariosService {
     public void recuperarSenha(String destino){
         try {
             if(!repository.existsByEmail(destino)){
-                throw new EmailNaoEncontradoException();
+                throw new EmailNaoEncontradoException("Email não encontrado");
             }
             emailClient.enviarEmail(new Email(destino, "Recuperação de senha", "Teste"));
             

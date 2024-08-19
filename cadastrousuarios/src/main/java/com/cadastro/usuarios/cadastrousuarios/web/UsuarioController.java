@@ -88,6 +88,7 @@ public class UsuarioController implements SpringDoc{
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
     public ResponseEntity<Void> recuperarSenha(@RequestBody @Email String email){
-
+        usuarioService.recuperarSenha(email);
+        return ResponseEntity.noContent().build();
     }
 }
