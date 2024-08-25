@@ -89,8 +89,8 @@ public class UsuarioController implements SpringDoc{
     }
 
     @PostMapping("/email")
-    public ResponseEntity<Void> recuperarSenha(){
-        usuarioService.recuperarSenha();
+    public ResponseEntity<Void> recuperarSenha(@RequestBody @Email String email){
+        usuarioService.recuperarSenha(email);
         return ResponseEntity.noContent().build();
     }
 }

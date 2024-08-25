@@ -76,7 +76,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EmailNaoEncontradoException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleUEmailNaoEncontradoException(EmailNaoEncontradoException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao enviar o email: " + ex.getMessage());
     }
     
 }

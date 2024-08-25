@@ -148,17 +148,16 @@ public class UsuariosService {
     }
 
     @Transactional
-    public void recuperarSenha(){
+    public void recuperarSenha(String email){
         try {
-
-            if(false){
+            if(!repository.existsByEmail(email)){
                 throw new EmailNaoEncontradoException("Email não encontrado");
             }
 
-            emailClient.enviarEmail(new Email("murilomazur@hotmail.com", "Recuperação de senha", "Teste"));
+            emailClient.enviarEmail(new Email(email, "Recuperação de senha", "Link para a recuperação da senha: taltaltal"));
             
         } catch (EmailNaoEncontradoException e) {
-            log.error("Erro ao buscar pelo email {}", "murilomazur@hotmail.com", e);
+            log.error("Erro ao buscar pelo email {}", email, e);
             throw e;
         }
     }
