@@ -22,6 +22,7 @@ import com.cadastro.usuarios.cadastrousuarios.swagger.SpringDoc;
 import com.cadastro.usuarios.dtos.UsuariosFindDto;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
@@ -85,5 +86,11 @@ public class UsuarioController implements SpringDoc{
         Optional<Usuarios> usuario = usuarioService.updateUsuarios(id, updatedPasteis);
         return usuario.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/email")
+    public ResponseEntity<Void> recuperarSenha(@RequestBody @Email String email){
+        usuarioService.recuperarSenha(email);
+        return ResponseEntity.noContent().build();
     }
 }
